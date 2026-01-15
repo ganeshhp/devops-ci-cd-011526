@@ -20,11 +20,12 @@ $ git reset --soft <version-hash-code>
 ## files are moved into staging and hash object for subsequent commits are removed (garbage collected).
 
 Stash operations:
+## modify existing files or create new file in the branch that you are working in and then we can test below commands.
 
 $ git stash 
 
 ## this command gets applied to the files in work area. Once applied the files are moved to temporary storage area which git manages.
-## modify existing files or create new file in the branch that you are working in and then we can test below commands.
+
 
 $ git stash apply 
 
