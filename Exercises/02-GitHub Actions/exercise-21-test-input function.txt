@@ -1,0 +1,39 @@
+### GitHub Actions has a unique function that we can use in the workflow. The "Input function" by which we can provide input at runtime, while the trigger is set to manual (workflow_dispatch).
+
+## create file in the .github/workflows/ folder, named as test-inputs.yml
+
+name: Test Workflow Inputs
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Target environment"
+        required: true
+        default: "dev"
+        type: choice
+        options:
+          - dev
+          - qa
+          - prod
+
+      replicas:
+        description: "Number of replicas"
+        required: true
+        default: "2"
+
+      enable_debug:
+        description: "Enable debug mode"
+        required: false
+        default: "false"
+
+jobs:
+  show-inputs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print input values
+        run: |
+          echo "Environment   : ${{ inputs.environment }}"
+          echo "Replicas      : ${{ inputs.replicas }}"
+          echo "Debug Enabled : ${{ inputs.enable_debug }}"
