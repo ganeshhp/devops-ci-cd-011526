@@ -4,8 +4,26 @@
 
   $ kubectl run webserver --image=httpd:latest 
   # kubectl delete pod/webserver
+  ############
   $ kubectl run webserver --image=httpd:latest --dry-run=client -o yaml > pod.yaml
 
+  apiVersion: v1
+  kind: Pod
+  metadata:
+   creationTimestamp: null
+   labels:
+     run: webserver
+   name: webserver
+  spec:
+    containers:
+    - image: httpd:2.4
+      name: webserver
+      resources: {}
+    dnsPolicy: ClusterFirst
+    restartPolicy: Always
+  status: {}
+
+########
   $ kubectl create -f pod.yaml
   $ nano pod.yaml
   #  make changes to Label, and image to httpd:2.4.57
