@@ -1,0 +1,91 @@
+### let's start using terraform commands ##
+
+$ terraform version
+
+### install AWSCLI on terraform machine ###
+
+$ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+$ unzip awscliv2.zip
+$ sudo ./aws/install
+
+##################
+
+### let's start with creating terraform environment
+
+$ mkdir terraform-aws
+
+$ cd terraform-aws
+
+$ nano main.tf
+
+### append below lines of code to the file
+### add providers to the config file.
+
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.92"
+    }
+  }
+
+  required_version = ">= 1.2"
+}
+
+
+$ terraform fmt main.tf      .... this command is to correct format of the configuration file
+
+## now try running the init command.
+
+$ terraform init
+
+## validate the configuration file using validate command.
+
+$ terraform validate
+
+
+## add below lines to the code. this is to add provider section. (Cloud Service Provider). We can add multiple service providers in the same config file as well.
+
+provider "aws" {
+  region  = "ap-south-1"
+}
+
+## once the providers are added we can define the resources that we want to create using the provider, in this case Docker as provider.
+### Using data source to query cloud service provider for information about resources.
+
+data "aws_ami" "ubuntu" {
+  most_recent = true
+
+  filter {
+    name = "name"
+    values = ["ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"]
+  }
+
+  owners = ["099720109477"] # Canonical
+}
+
+### Add resource statement. Resource block defines the components of your infrastructure on the service provider's platform.
+
+resource "aws_instance" "app_server" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = "t3.small"
+
+  tags = {
+    Name = "terraform-instance"
+  }
+}
+
+## Now let's create plan.
+
+$ terraform plan
+
+## and Once the Plan is validated. We can now the use the apply command to provision the infrastructure.
+
+## run the plan and apply command one more time.
+
+$ terraform plan -out plan.tf
+
+$ terraform apply   .... or,
+
+$ terraform apply plan.tf
+

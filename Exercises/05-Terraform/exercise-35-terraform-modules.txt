@@ -1,0 +1,67 @@
+### create modules folder on the root folder where we have the main.tf file. Inside modules folder create s3 folder.
+
+$ mkdir -p modules/s3
+
+# cd modules/s3
+
+### create main.tf file
+
+$ nano main.tf
+
+resource "aws_s3_bucket" "data_bucket" {
+  bucket        = var.bucket_name
+  force_destroy = var.force_destroy
+
+  tags = {
+    Name        = var.bucket_name
+    Environment = var.environment
+  }
+}
+
+resource "aws_s3_bucket_versioning" "data_bucket" {
+  bucket = aws_s3_bucket.data_bucket.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+
+## create output.tf file
+
+output "bucket_name" {
+  value = aws_s3_bucket.data_bucket.bucket
+}
+
+output "bucket_arn" {
+  value = aws_s3_bucket.data_bucket.arn
+}
+
+
+## And create variables.tf file
+
+variable "bucket_name" {
+  description = "Name of the S3 bucket"
+  type        = string
+}
+
+variable "environment" {
+  description = "Environment name"
+  type        = string
+}
+
+variable "force_destroy" {
+  description = "Allow bucket to be destroyed even if it contains objects"
+  type        = bool
+  default     = false
+}
+
+
+## save files and in the aws main.tf file add below block after the resource declaration.
+
+module "s3_bucket" {
+  source        = "./modules/s3"
+  bucket_name   = "terraform-test-s3-bucket"
+  environment   = "dev"
+  force_destroy = true
+}

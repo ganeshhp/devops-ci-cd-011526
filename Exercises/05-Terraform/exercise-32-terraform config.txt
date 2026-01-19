@@ -1,0 +1,10 @@
+### let's validate the configuration
+
+## let's list the resources and data sources in the TF workspace.
+
+$ terraform state list
+
+## to see the entire list of resources with detail.. use terraform state file
+
+$ terraform show
+
