@@ -11,6 +11,8 @@
   #  make changes to Label, and image to httpd:2.4.57
   $ kubectl apply -f pod.yaml
 
+  $ kubectl describe pod/webserver
+
 2) create ReplicationController object with manifest file
 
   a) create a file as rc.yml
