@@ -8,7 +8,7 @@ $ nano Dockerfile
   FROM ubuntu:18.04
   RUN apt update -y
   RUN apt install apache2 -y
-  RUN apt install curl -y
+  RUN apt install curl -y && && apt install nano -y
   COPY ./index.html /var/www/html/
   EXPOSE 80
   CMD ["apachectl", "-D", "FOREGROUND"]
