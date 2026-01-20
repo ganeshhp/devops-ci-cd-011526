@@ -104,3 +104,5 @@ kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.0/
 #echo -e "\n"
 #echo -e "\n"
 
+kubectl taint nodes --all node-role.kubernetes.io/control-plane-
+
