@@ -69,7 +69,7 @@ sudo apt install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 
 ### initiate cluster
-echo -e "Initialize the Cluster on the Control-Plane Node"
+echo -e "Initializing the Cluster on the Control-Plane Node"
 sleep 5
 
 #ipaddr=$(hostname --all-ip-addresses)
