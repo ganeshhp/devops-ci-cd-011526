@@ -1,6 +1,8 @@
+#!/bin/bash
+
 ### script to install containerd and kubernetes services
 ## YELLOW='\033[0;33m'
-#!/bin/bash
+
 sudo apt-get update
 sudo swapoff -a
 sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
